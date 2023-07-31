@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
+import 'package:pachpach/constants.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
               width: 300,
               height: 150,
               decoration: BoxDecoration(
-                color: Color(0xFF76FF03),
+                color: Color(KbaseColor),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Container(

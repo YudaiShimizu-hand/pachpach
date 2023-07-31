@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pachpach/constants.dart';
 
 class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
   @override
@@ -9,7 +10,7 @@ class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget> [
           Image.asset(
-            'assets/appLogo.png',
+            KbaseImg,
             width: 100,
             height: 100,
           ),

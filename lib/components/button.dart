@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pachpach/constants.dart';
 
 class ButtonCmp extends StatelessWidget {
   ButtonCmp({required this.url, required this.txt, required this.mt});
@@ -21,7 +22,7 @@ class ButtonCmp extends StatelessWidget {
         label: Text(txt),
         icon: const Icon(
           Icons.navigate_next,
-          color: Color(0xFF76FF03),
+          color: Color(KbaseColor),
         ),
       ),
     );
