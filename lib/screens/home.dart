@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pachpach/components/appBar.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget> [
-            Image.asset(
-              'assets/appLogo.png',
-              width: 100,
-              height: 100,
-            ),
-            IconButton(onPressed: (){}, icon: Icon(Icons.home_filled))
-          ],
-        ),
-      ),
+      appBar: AppBarCmp(),
       body: Center(
         child: Column(
           children: <Widget>[
