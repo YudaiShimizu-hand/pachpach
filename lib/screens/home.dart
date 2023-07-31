@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
+import 'package:pachpach/components/button.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -82,60 +83,13 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 70),
-              child: ElevatedButton.icon(
-                onPressed: (){
-                  Navigator.pushNamed(context, '/record');
-                },
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(200, 50),
-                  backgroundColor: Colors.black,
-                ),
-                label: Text("本日の記録"),
-                icon: const Icon(
-                  Icons.navigate_next,
-                  color: Color(0xFF76FF03),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 50),
-              child: ElevatedButton.icon(
-                onPressed: (){
-                  Navigator.pushNamed(context, '/calendar');
-                },
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(200, 50),
-                  backgroundColor: Colors.black,
-                ),
-                label: Text("カレンダー"),
-                icon: const Icon(
-                  Icons.navigate_next,
-                  color: Color(0xFF76FF03),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 50),
-              child: ElevatedButton.icon(
-                onPressed: (){
-                  Navigator.pushNamed(context, '/data');
-                },
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(200, 50),
-                  backgroundColor: Colors.black,
-                ),
-                label: Text("データ"),
-                icon: const Icon(
-                  Icons.navigate_next,
-                  color: Color(0xFF76FF03),
-                ),
-              ),
-            ),
+            ButtonCmp(url: '/record', txt: '本日の記録', mt: 70),
+            ButtonCmp(url: '/calendar', txt: 'カレンダー', mt: 30),
+            ButtonCmp(url: '/data', txt: 'データ', mt: 30),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
