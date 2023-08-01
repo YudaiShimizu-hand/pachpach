@@ -27,7 +27,14 @@ class HomePage extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 color: Color(KbaseColor),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 20.0,
+                    color: Color(KbaseColor).withOpacity(0.5),
+                    offset: Offset(20, 20),
+                  )
+                ],
               ),
               child: Container(
                 margin: EdgeInsets.all(20),

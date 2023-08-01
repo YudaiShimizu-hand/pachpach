@@ -11,6 +11,17 @@ class ButtonCmp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: mt),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(50),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20.0,
+            color: Colors.white.withOpacity(0.5),
+            offset: Offset(15, 15),
+          )
+        ],
+      ),
       child: ElevatedButton.icon(
         onPressed: (){
           Navigator.pushNamed(context, url);
