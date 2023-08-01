@@ -34,7 +34,7 @@ class RecordPage extends StatelessWidget {
             const Text(
               '本日の記録',
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 20,
                 color: Colors.black,
               ),
             ),
@@ -77,7 +77,7 @@ class RecordPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            ElevatedButton(onPressed: (){}, child: Text('記録する')),
+            ButtonCmp(clickHand: (){}, txt: '記録する', mt: 5),
           ],
         ),
         ),

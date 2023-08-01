@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/constants.dart';
+import 'dart:core';
 
 class ButtonCmp extends StatelessWidget {
-  ButtonCmp({required this.url, required this.txt, required this.mt});
-  String url;
+  ButtonCmp({required this.clickHand, required this.txt, required this.mt});
   String txt;
   double mt;
+  final VoidCallback? clickHand;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +24,7 @@ class ButtonCmp extends StatelessWidget {
         ],
       ),
       child: ElevatedButton.icon(
-        onPressed: (){
-          Navigator.pushNamed(context, url);
-        },
+        onPressed: clickHand,
         style: ElevatedButton.styleFrom(
           fixedSize: Size(200, 50),
           backgroundColor: Colors.black,

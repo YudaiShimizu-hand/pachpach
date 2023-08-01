@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
+import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 
 class DataPage extends StatefulWidget {
@@ -84,10 +85,19 @@ class _DataPage extends State<DataPage> {
                   )),
                   Expanded(
                       child: Container(
-                        margin: EdgeInsets.all(20),
-                        child: ElevatedButton(
-                          onPressed: (){},
-                          child: Text('勝率を見る'),
+                        margin: EdgeInsets.all(5),
+                        child: ElevatedButton.icon(
+                          onPressed: (){
+                          },
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: Size(50, 50),
+                            backgroundColor: Colors.black,
+                          ),
+                          label: Text("勝率を見る"),
+                          icon: const Icon(
+                            Icons.navigate_next,
+                            color: Color(KbaseColor),
+                          ),
                         ),
                   ))
                 ],

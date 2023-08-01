@@ -91,9 +91,15 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            ButtonCmp(url: '/record', txt: '本日の記録', mt: 70),
-            ButtonCmp(url: '/calendar', txt: 'カレンダー', mt: 30),
-            ButtonCmp(url: '/data', txt: 'データ', mt: 30),
+            ButtonCmp(clickHand:  (){
+              Navigator.pushNamed(context, '/record');
+            },txt: '本日の記録', mt: 70),
+            ButtonCmp(clickHand: (){
+              Navigator.pushNamed(context, '/calendar');
+            }, txt: 'カレンダー', mt: 30),
+            ButtonCmp(clickHand: (){
+              Navigator.pushNamed(context, '/data');
+            }, txt: 'データ', mt: 30),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
