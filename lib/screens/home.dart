@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarCmp(),
+      appBar: AppBarCmp(isBtn: 'Home'),
       body: Center(
         child: Column(
           children: <Widget>[

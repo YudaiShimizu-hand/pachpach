@@ -8,7 +8,7 @@ class RecordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBarCmp(),
+      appBar: AppBarCmp(isBtn: 'Record'),
       body: Container(
           margin: const EdgeInsets.all(50),
           width: 300,

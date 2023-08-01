@@ -5,7 +5,7 @@ class CalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarCmp(),
+      appBar: AppBarCmp(isBtn: 'Calendar'),
     );
   }
 }
