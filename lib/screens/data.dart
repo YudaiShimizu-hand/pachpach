@@ -130,7 +130,7 @@ class _DataPage extends State<DataPage> {
                 ],
               ),
             ),
-            Kspace,
+            KSpace,
             Container(
               width: 300,
               height: 200,
@@ -147,11 +147,11 @@ class _DataPage extends State<DataPage> {
               ),
               child: Column(
                 children: <Widget>[
-                  Kspace,
-                  Text('渋谷エスパス',style: TextStyle(color: Colors.black),),
-                  Text('エヴァンゲリオン',style: TextStyle(color: Colors.black),),
-                  Text('勝率は',style: TextStyle(color: Colors.black),),
-                  Kspace,
+                  KSecondSpace,
+                  // Text('渋谷エスパス',style: TextStyle(color: Colors.black),),
+                  // Text('エヴァンゲリオン',style: TextStyle(color: Colors.black),),
+                  Text('勝率は',style: TextStyle(color: Colors.black, fontSize: 20),),
+                  KSpace,
                   Text('  94%',style: TextStyle(fontSize: 60),),
                 ],
               ),
@@ -176,7 +176,7 @@ class _DataPage extends State<DataPage> {
               child: Center(
                 child: Text(
                     'この店、この台はいいです',
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             )

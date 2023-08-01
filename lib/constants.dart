@@ -4,8 +4,13 @@ const KbaseColor = 0xFF76FF03;
 
 const KbaseImg = 'assets/appLogo.png';
 
-const Kspace =
+const KSpace =
   SizedBox(
     height: 15,
   );
+
+const KSecondSpace =
+SizedBox(
+  height: 30,
+);
 

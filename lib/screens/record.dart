@@ -28,17 +28,17 @@ class RecordPage extends StatelessWidget {
           ),
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 30,
-            ),
+            KSecondSpace,
             const Text(
               '本日の記録',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
               ),
             ),
-            Kspace,
+            KSpace,
             const Text(
                   '場所',
                 style: TextStyle(
@@ -47,7 +47,7 @@ class RecordPage extends StatelessWidget {
                 ),
             ),
             InputCmp(keyTyp: TextInputType.text),
-            Kspace,
+            KSpace,
             const Text(
               '店舗名',
               style: TextStyle(
@@ -56,7 +56,7 @@ class RecordPage extends StatelessWidget {
               ),
             ),
             InputCmp(keyTyp: TextInputType.text),
-            Kspace,
+            KSpace,
             const Text(
               '機種',
               style: TextStyle(
@@ -65,7 +65,7 @@ class RecordPage extends StatelessWidget {
               ),
             ),
             InputCmp(keyTyp: TextInputType.text),
-            Kspace,
+            KSpace,
             const Text(
               '投資額(円)',
               style: TextStyle(
@@ -74,7 +74,7 @@ class RecordPage extends StatelessWidget {
               ),
             ),
             InputCmp(keyTyp: TextInputType.number),
-            Kspace,
+            KSpace,
             const Text(
               '回収額(円)',
               style: TextStyle(
@@ -83,9 +83,7 @@ class RecordPage extends StatelessWidget {
               ),
             ),
             InputCmp(keyTyp: TextInputType.number),
-            const SizedBox(
-              height: 30,
-            ),
+            KSecondSpace,
             ButtonCmp(clickHand: (){}, txt: '記録する', mt: 5),
           ],
         ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/screens/calendar.dart';
 import 'package:pachpach/screens/data.dart';
+import 'package:pachpach/screens/login.dart';
 import 'package:pachpach/screens/record.dart';
 import 'package:pachpach/screens/home.dart';
+import 'package:pachpach/screens/signin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
         '/record' : (context) => RecordPage(),
         '/data' : (context) => DataPage(),
         '/calendar' : (context) => CalendarPage(),
+        '/login' : (context) => LoginPage(),
+        '/signin' : (context) => SigninPage(),
       },
     );
   }

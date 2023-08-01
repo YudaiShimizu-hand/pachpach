@@ -100,6 +100,12 @@ class HomePage extends StatelessWidget {
             ButtonCmp(clickHand: (){
               Navigator.pushNamed(context, '/data');
             }, txt: 'データ', mt: 30),
+             ButtonCmp(clickHand: (){
+              Navigator.pushNamed(context, '/signin');
+            },txt: 'サインイン', mt: 30),
+            ButtonCmp(clickHand: (){
+              Navigator.pushNamed(context, '/login');
+            }, txt: 'ログイン', mt: 30),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
