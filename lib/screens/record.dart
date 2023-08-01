@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
+import 'package:pachpach/components/input.dart';
 
 class RecordPage extends StatelessWidget {
   @override
@@ -45,23 +46,7 @@ class RecordPage extends StatelessWidget {
                   color: Colors.black,
                 ),
             ),
-            const SizedBox(
-              width: 200,
-              height: 50,
-              child: TextField(
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  color: Colors.black
-                ),
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  )
-                ),
-              ),
-            ),
+            InputCmp(keyTyp: TextInputType.text),
             Kspace,
             const Text(
               '機種',
@@ -70,23 +55,7 @@ class RecordPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              width: 200,
-              height: 50,
-              child: TextField(
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                    color: Colors.black
-                ),
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    )
-                ),
-              ),
-            ),
+            InputCmp(keyTyp: TextInputType.text),
             Kspace,
             const Text(
               '投資額(円)',
@@ -95,23 +64,7 @@ class RecordPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              width: 200,
-              height: 50,
-              child: TextField(
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                    color: Colors.black
-                ),
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    )
-                ),
-              ),
-            ),
+            InputCmp(keyTyp: TextInputType.number),
             Kspace,
             const Text(
               '回収額(円)',
@@ -120,23 +73,7 @@ class RecordPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              width: 200,
-              height: 50,
-              child: TextField(
-                keyboardType: TextInputType.number,
-                style: TextStyle(
-                    color: Colors.black
-                ),
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    )
-                ),
-              ),
-            ),
+            InputCmp(keyTyp: TextInputType.number),
             const SizedBox(
               height: 30,
             ),
