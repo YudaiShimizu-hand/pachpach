@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/screens/calendar.dart';
 import 'package:pachpach/screens/data.dart';
+import 'package:pachpach/screens/first.dart';
 import 'package:pachpach/screens/login.dart';
 import 'package:pachpach/screens/record.dart';
 import 'package:pachpach/screens/home.dart';
@@ -20,8 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
       ),
-      initialRoute: '/',
+      initialRoute: '/first',
       routes: {
+        '/first' : (context) => FirstPage(),
         '/' : (context) => HomePage(),
         '/record' : (context) => RecordPage(),
         '/data' : (context) => DataPage(),

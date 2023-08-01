@@ -33,7 +33,7 @@ class SigninPage extends StatelessWidget {
               height: 50,
             ),
             const Text(
-              'サインイン',
+              '新規登録',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.black,
@@ -71,7 +71,7 @@ class SigninPage extends StatelessWidget {
             ),
             InputCmp(keyTyp: TextInputType.text),
             KSecondSpace,
-            ButtonCmp(clickHand: (){}, txt: 'サインイン', mt: 5),
+            ButtonCmp(clickHand: (){}, txt: '新規登録', mt: 5),
           ],
         ),
       ),
