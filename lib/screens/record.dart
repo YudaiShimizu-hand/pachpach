@@ -49,6 +49,15 @@ class RecordPage extends StatelessWidget {
             InputCmp(keyTyp: TextInputType.text),
             Kspace,
             const Text(
+              '店舗名',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+            InputCmp(keyTyp: TextInputType.text),
+            Kspace,
+            const Text(
               '機種',
               style: TextStyle(
                 fontSize: 15,

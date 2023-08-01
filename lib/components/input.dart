@@ -7,7 +7,7 @@ class InputCmp extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 200,
-      height: 50,
+      height: 30,
       child: TextField(
         keyboardType: keyTyp,
         style: TextStyle(

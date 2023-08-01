@@ -12,8 +12,10 @@ class DataPage extends StatefulWidget {
 
 class _DataPage extends State<DataPage> {
   static const List<String> plList = <String>["渋谷", '新宿', '池袋', '品川'];
+  static const List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
   static const List<String> machineList = <String>["エヴァンゲリオン", 'ジャグラー', 'ウニコーン', '大工の源さん'];
   String dropdownPlace = plList.first;
+  String dropdownShop = shopList.first;
   String dropdownMachine = machineList.first;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class _DataPage extends State<DataPage> {
             ),
             Container(
               width: 300,
-              height: 200,
+              height: 230,
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -38,7 +40,8 @@ class _DataPage extends State<DataPage> {
                           children: <Widget>[
                               DropdownButton<String>(
                               value: dropdownPlace,
-                                icon: const Icon(Icons.arrow_downward),
+                                icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
+                                isExpanded: true,
                                 elevation: 16,
                                 style: const TextStyle(color: Color(KbaseColor)),
                                 underline: Container(
@@ -59,8 +62,32 @@ class _DataPage extends State<DataPage> {
                                 }).toList(),
                               ),
                             DropdownButton<String>(
+                              value: dropdownShop,
+                              icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor)),
+                              isExpanded: true,
+                              elevation: 16,
+                              style: const TextStyle(color: Color(KbaseColor)),
+                              underline: Container(
+                                height: 2,
+                                color: Color(KbaseColor),
+                              ),
+                              onChanged: (String? value) {
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  dropdownShop = value!;
+                                });
+                              },
+                              items: shopList.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                            DropdownButton<String>(
                               value: dropdownMachine,
-                              icon: const Icon(Icons.arrow_downward),
+                              icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor)),
+                              isExpanded: true,
                               elevation: 16,
                               style: const TextStyle(color: Color(KbaseColor)),
                               underline: Container(
@@ -85,7 +112,7 @@ class _DataPage extends State<DataPage> {
                   )),
                   Expanded(
                       child: Container(
-                        margin: EdgeInsets.all(5),
+                        margin: EdgeInsets.only(left: 20),
                         child: ElevatedButton.icon(
                           onPressed: (){
                           },
