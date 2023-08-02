@@ -22,9 +22,7 @@ class FirstPage extends StatelessWidget {
               height: 100,
             ),
             ElevatedButton.icon(
-              onPressed: (){
-                Navigator.pushNamed(context, '/signin');
-              },
+              onPressed: (){},
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(250, 50),
                 backgroundColor: Colors.black,

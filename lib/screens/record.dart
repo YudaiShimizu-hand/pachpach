@@ -4,8 +4,20 @@ import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/components/input.dart';
+class RecordPage extends StatefulWidget {
+  const RecordPage({super.key});
 
-class RecordPage extends StatelessWidget {
+  @override
+  State<RecordPage> createState() => _RecordPage();
+}
+
+class _RecordPage extends State<RecordPage> {
+  static const List<String> plList = <String>["渋谷", '新宿', '池袋', '品川'];
+  static const List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
+  static const List<String> machineList = <String>["エヴァンゲリオン", 'ジャグラー', 'ウニコーン', '大工の源さん'];
+  String dropdownPlace = plList.first;
+  String dropdownShop = shopList.first;
+  String dropdownMachine = machineList.first;
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -13,7 +25,7 @@ class RecordPage extends StatelessWidget {
       body: Container(
           margin: const EdgeInsets.all(50),
           width: 300,
-          height: 550,
+          height: 600,
           // color: Color(KbaseColor),
           decoration: BoxDecoration(
             color: Color(KbaseColor),
@@ -39,32 +51,138 @@ class RecordPage extends StatelessWidget {
               ),
             ),
             KSpace,
-            const Text(
-                  '場所',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
+            Container(
+              height: 25,
+              margin: EdgeInsets.only(left: 130, right: 70),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      '場所',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                    IconButton(onPressed: (){
+                    }, icon: Icon(Icons.add),iconSize: 15,color: Colors.black)
+                  ],
                 ),
             ),
-            InputCmp(keyTyp: TextInputType.text),
-            KSpace,
-            const Text(
-              '店舗名',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
+            SizedBox(
+              width: 160,
+              child: DropdownButton<String>(
+                dropdownColor: Colors.white,
+                value: dropdownPlace,
+                icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
+                isExpanded: true,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.white,
+                ),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    dropdownPlace = value!;
+                  });
+                },
+                items: plList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
             ),
-            InputCmp(keyTyp: TextInputType.text),
             KSpace,
-            const Text(
-              '機種',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
+            Container(
+              height: 25,
+              margin: EdgeInsets.only(left: 120, right: 60),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    '店舗名',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                  IconButton(onPressed: (){}, icon: Icon(Icons.add),iconSize: 15,color: Colors.black)
+                ],
               ),
             ),
-            InputCmp(keyTyp: TextInputType.text),
+            SizedBox(
+              width: 160,
+              child: DropdownButton<String>(
+                dropdownColor: Colors.white,
+                value: dropdownShop,
+                icon: const Icon(Icons.arrow_circle_down, color: Colors.white),
+                isExpanded: true,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.white,
+                ),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    dropdownShop = value!;
+                  });
+                },
+                items: shopList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+            KSpace,
+            Container(
+              height: 25,
+              margin: EdgeInsets.only(left: 130, right: 70),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    '機種',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                  IconButton(onPressed: (){}, icon: Icon(Icons.add),iconSize: 15, color: Colors.black,)
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 160,
+              child: DropdownButton<String>(
+                dropdownColor: Colors.white,
+                value: dropdownMachine,
+                icon: const Icon(Icons.arrow_circle_down, color: Colors.white),
+                isExpanded: true,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.white,
+                ),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    dropdownMachine = value!;
+                  });
+                },
+                items: machineList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
             KSpace,
             const Text(
               '投資額(円)',

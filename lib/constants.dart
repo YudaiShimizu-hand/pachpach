@@ -6,7 +6,7 @@ const KbaseImg = 'assets/appLogo.png';
 
 const KSpace =
   SizedBox(
-    height: 15,
+    height: 10,
   );
 
 const KSecondSpace =
