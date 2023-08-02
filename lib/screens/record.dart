@@ -12,12 +12,16 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPage extends State<RecordPage> {
-  static const List<String> plList = <String>["渋谷", '新宿', '池袋', '品川'];
-  static const List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
-  static const List<String> machineList = <String>["エヴァンゲリオン", 'ジャグラー', 'ウニコーン', '大工の源さん'];
-  String dropdownPlace = plList.first;
-  String dropdownShop = shopList.first;
-  String dropdownMachine = machineList.first;
+  final List<String> plList = <String>["渋谷", '新宿', '池袋', '品川'];
+  final List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
+  final List<String> machineList = <String>["エヴァンゲリオン", 'ジャグラー', 'ウニコーン', '大工の源さん'];
+  String dropdownPlace = "渋谷";
+  String dropdownShop = "GAIA";
+  String dropdownMachine = "エヴァンゲリオン";
+
+  final controller = TextEditingController();
+  final focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -64,6 +68,33 @@ class _RecordPage extends State<RecordPage> {
                       ),
                     ),
                     IconButton(onPressed: (){
+                      showDialog(context: context, builder: (context){
+                        return AlertDialog(
+                          content: TextFormField(
+                            autofocus: true, // ダイアログが開いたときに自動でフォーカスを当てる
+                            focusNode: focusNode,
+                            controller: controller,
+                            onFieldSubmitted: (_) {
+                              // エンターを押したときに実行される
+                              setState(() {
+                                plList.add(controller.text);
+                                controller.clear();
+                              });
+                            },
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  plList.add(controller.text);
+                                  controller.clear();
+                                });
+                              },
+                              child: const Text('追加'),
+                            )
+                          ],
+                        );
+                      });
                     }, icon: Icon(Icons.add),iconSize: 15,color: Colors.black)
                   ],
                 ),
@@ -108,7 +139,35 @@ class _RecordPage extends State<RecordPage> {
                       color: Colors.black,
                     ),
                   ),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.add),iconSize: 15,color: Colors.black)
+                  IconButton(onPressed: (){
+                    showDialog(context: context, builder: (context){
+                      return AlertDialog(
+                        content: TextFormField(
+                          autofocus: true, // ダイアログが開いたときに自動でフォーカスを当てる
+                          focusNode: focusNode,
+                          controller: controller,
+                          onFieldSubmitted: (_) {
+                            // エンターを押したときに実行される
+                            setState(() {
+                              plList.add(controller.text);
+                              controller.clear();
+                            });
+                          },
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                shopList.add(controller.text);
+                                controller.clear();
+                              });
+                            },
+                            child: const Text('追加'),
+                          )
+                        ],
+                      );
+                    });
+                  }, icon: Icon(Icons.add),iconSize: 15,color: Colors.black)
                 ],
               ),
             ),
@@ -152,7 +211,35 @@ class _RecordPage extends State<RecordPage> {
                       color: Colors.black,
                     ),
                   ),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.add),iconSize: 15, color: Colors.black,)
+                  IconButton(onPressed: (){
+                    showDialog(context: context, builder: (context){
+                      return AlertDialog(
+                        content: TextFormField(
+                          autofocus: true, // ダイアログが開いたときに自動でフォーカスを当てる
+                          focusNode: focusNode,
+                          controller: controller,
+                          onFieldSubmitted: (_) {
+                            // エンターを押したときに実行される
+                            setState(() {
+                              plList.add(controller.text);
+                              controller.clear();
+                            });
+                          },
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                machineList.add(controller.text);
+                                controller.clear();
+                              });
+                            },
+                            child: const Text('追加'),
+                          )
+                        ],
+                      );
+                    });
+                  }, icon: Icon(Icons.add),iconSize: 15, color: Colors.black,)
                 ],
               ),
             ),
