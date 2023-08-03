@@ -4,12 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
-import 'package:pachpach/components/input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SigninPage extends StatelessWidget {
+class SigninPage extends StatefulWidget {
+  @override
+  _SigninPage createState() => _SigninPage();
+}
+
+class _SigninPage extends State<SigninPage> {
+
+  final _auth = FirebaseAuth.instance;
+
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBarCmp(isBtn: 'Record'),
       body: Container(
         margin: const EdgeInsets.all(50),
@@ -51,7 +63,27 @@ class SigninPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            InputCmp(keyTyp: TextInputType.emailAddress),
+            SizedBox(
+              width: 200,
+              height: 30,
+              child: TextField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(
+                    color: Colors.black
+                ),
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    )
+                ),
+                onChanged: (value){
+                    email = value;
+                },
+              ),
+            ),
             KSpace,
             const Text(
               'パスワード',
@@ -60,18 +92,50 @@ class SigninPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            InputCmp(keyTyp: TextInputType.text),
-            KSpace,
-            const Text(
-              'パスワード確認',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
+            SizedBox(
+              width: 200,
+              height: 30,
+              child: TextField(
+                textAlign: TextAlign.center,
+                obscureText: true,
+                keyboardType: TextInputType.text,
+                style: TextStyle(
+                    color: Colors.black
+                ),
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    )
+                ),
+                onChanged: (value){
+                  password = value;
+                },
               ),
             ),
-            InputCmp(keyTyp: TextInputType.text),
+            KSpace,
+            // const Text(
+            //   'パスワード確認',
+            //   style: TextStyle(
+            //     fontSize: 15,
+            //     color: Colors.black,
+            //   ),
+            // ),
+            // InputCmp(keyTyp: TextInputType.text),
             KSecondSpace,
-            ButtonCmp(clickHand: (){}, txt: '新規登録', mt: 5),
+            ButtonCmp(
+                clickHand: ()async{
+                  try {
+                    final newUser =  await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                    if(newUser != null){
+                      Navigator.pushNamed(context, "/");
+                    }
+                  }catch(e){
+                    print(e);
+                  }
+                },
+                txt: '新規登録', mt: 5),
           ],
         ),
       ),

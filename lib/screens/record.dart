@@ -25,6 +25,7 @@ class _RecordPage extends State<RecordPage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBarCmp(isBtn: 'Record'),
       body: Container(
           margin: const EdgeInsets.all(50),
@@ -71,6 +72,7 @@ class _RecordPage extends State<RecordPage> {
                       showDialog(context: context, builder: (context){
                         return AlertDialog(
                           content: TextFormField(
+                            textAlign: TextAlign.center,
                             autofocus: true, // ダイアログが開いたときに自動でフォーカスを当てる
                             focusNode: focusNode,
                             controller: controller,
@@ -102,6 +104,7 @@ class _RecordPage extends State<RecordPage> {
             SizedBox(
               width: 160,
               child: DropdownButton<String>(
+                alignment: Alignment.center,
                 dropdownColor: Colors.white,
                 value: dropdownPlace,
                 icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
@@ -143,6 +146,7 @@ class _RecordPage extends State<RecordPage> {
                     showDialog(context: context, builder: (context){
                       return AlertDialog(
                         content: TextFormField(
+                          textAlign: TextAlign.center,
                           autofocus: true, // ダイアログが開いたときに自動でフォーカスを当てる
                           focusNode: focusNode,
                           controller: controller,
@@ -174,6 +178,7 @@ class _RecordPage extends State<RecordPage> {
             SizedBox(
               width: 160,
               child: DropdownButton<String>(
+                alignment: Alignment.center,
                 dropdownColor: Colors.white,
                 value: dropdownShop,
                 icon: const Icon(Icons.arrow_circle_down, color: Colors.white),
@@ -215,6 +220,7 @@ class _RecordPage extends State<RecordPage> {
                     showDialog(context: context, builder: (context){
                       return AlertDialog(
                         content: TextFormField(
+                          textAlign: TextAlign.center,
                           autofocus: true, // ダイアログが開いたときに自動でフォーカスを当てる
                           focusNode: focusNode,
                           controller: controller,
@@ -246,6 +252,7 @@ class _RecordPage extends State<RecordPage> {
             SizedBox(
               width: 160,
               child: DropdownButton<String>(
+                alignment: Alignment.center,
                 dropdownColor: Colors.white,
                 value: dropdownMachine,
                 icon: const Icon(Icons.arrow_circle_down, color: Colors.white),

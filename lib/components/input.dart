@@ -9,6 +9,7 @@ class InputCmp extends StatelessWidget {
       width: 200,
       height: 30,
       child: TextField(
+        textAlign: TextAlign.center,
         keyboardType: keyTyp,
         style: TextStyle(
             color: Colors.black

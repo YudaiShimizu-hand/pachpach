@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "783199010160",
+    "project_id": "pach-app-e1c1a",
+    "storage_bucket": "pach-app-e1c1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783199010160:android:c94551715473c933c8a3b5",
+        "android_client_info": {
+          "package_name": "com.example.pachpach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783199010160-lej0h7uceffmusdpmo2e027kto0o7jo1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcBdkqXm6iarl3iC9X8nYMt5i1CfY9otk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783199010160-lej0h7uceffmusdpmo2e027kto0o7jo1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "783199010160-94n3h6o37bcehc59565kverf2jg57829.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "pach-ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,7 @@ import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 
 class HomePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
