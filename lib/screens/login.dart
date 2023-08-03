@@ -22,7 +22,7 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context){
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarCmp(isBtn: 'Record'),
+      appBar: AppBarCmp(isBtn: 'beforeLogin'),
       body: Container(
         margin: const EdgeInsets.all(50),
         width: 300,
@@ -125,6 +125,8 @@ class _LoginPage extends State<LoginPage> {
                 print(e);
               }
             }, txt: 'ログイン', mt: 5),
+            KSpace,
+            TextButton(onPressed: (){Navigator.pushNamed(context, '/signin');}, child: Text("新規登録"))
           ],
         ),
       ),

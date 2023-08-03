@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pachpach/constants.dart';
 
 class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
   AppBarCmp({required this.isBtn});
   String isBtn;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -16,6 +18,7 @@ class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
             width: 100,
             height: 100,
           ),
+          if(isBtn != 'beforeLogin')
           MenuBar(
               children: <Widget>[
                   SubmenuButton(
@@ -47,6 +50,33 @@ class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
                             Navigator.pushNamed(context, '/data');
                           },
                           child: const MenuAcceleratorLabel('&Data'),
+                    ),
+                    MenuItemButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (_) {
+                            return AlertDialog(
+                              content: Text("本当にログアウトしますか?"),
+                              actions: [
+                                TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () async{
+                                      await auth.signOut();
+                                      Navigator.pushNamed(context, '/first');
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: const MenuAcceleratorLabel('&Logout'),
                     ),
                   ],
                     child:  const Icon(Icons.menu, color: Color(KbaseColor),
