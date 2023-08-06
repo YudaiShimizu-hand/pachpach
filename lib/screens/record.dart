@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/components/input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+
 class RecordPage extends StatefulWidget {
   const RecordPage({super.key});
 
@@ -21,6 +25,50 @@ class _RecordPage extends State<RecordPage> {
 
   final controller = TextEditingController();
   final focusNode = FocusNode();
+
+  late String getToken;
+
+  @override
+  void initState(){
+    super.initState();
+    initFirebaseToken();
+  }
+
+  void initFirebaseToken() async{
+     final _auth = await FirebaseAuth.instance.currentUser;
+     if(_auth != null){
+       final tokenResult = await _auth.getIdTokenResult();
+       setState(() {
+         getToken = tokenResult.token!;
+       });
+     }
+  }
+
+  Future<void> postPlace(String dataValue) async{
+    final url = 'http://localhost:8081/api/v1/place';
+    final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $getToken',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'place_name': dataValue,
+        })
+    );
+
+    if (response.statusCode == 200) {
+      // リクエストが成功した場合の処理
+      print('Response data: ${response.body}');
+    } else {
+      // エラーが発生した場合の処理
+      print('Error: ${response.statusCode} ${response.reasonPhrase}');
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context){
@@ -79,18 +127,24 @@ class _RecordPage extends State<RecordPage> {
                             onFieldSubmitted: (_) {
                               // エンターを押したときに実行される
                               setState(() {
-                                plList.add(controller.text);
+                                String placeValue = controller.text;
+                                plList.add(placeValue);
+                                postPlace(placeValue);
                                 controller.clear();
                               });
-                            },
+                              Navigator.pop(context);
+                            }
                           ),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 setState(() {
-                                  plList.add(controller.text);
+                                  String placeValue = controller.text;
+                                  plList.add(placeValue);
+                                  postPlace(placeValue);
                                   controller.clear();
                                 });
+                                Navigator.pop(context);
                               },
                               child: const Text('追加'),
                             )
