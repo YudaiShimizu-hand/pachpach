@@ -266,18 +266,26 @@ class _RecordPage extends State<RecordPage> {
                           onFieldSubmitted: (_) {
                             // エンターを押したときに実行される
                             setState(() {
-                              plList.add(controller.text);
+                              String machineValue = controller.text;
+                              machineList.add(machineValue);
+                              final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
+                              dataInstance.postDropdownData();
                               controller.clear();
                             });
+                            Navigator.pop(context);
                           },
                         ),
                         actions: [
                           TextButton(
                             onPressed: () {
                               setState(() {
-                                machineList.add(controller.text);
+                                String machineValue = controller.text;
+                                machineList.add(machineValue);
+                                final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
+                                dataInstance.postDropdownData();
                                 controller.clear();
                               });
+                              Navigator.pop(context);
                             },
                             child: const Text('追加'),
                           )
