@@ -57,8 +57,11 @@ class _RecordPage extends State<RecordPage> {
        final List<String>? fetchedMachineList = await getList.fetchDropDownData('machine', 'machine_name');
        setState(() {
          plList = fetchedPlList!;
+         dropdownPlace = plList.isNotEmpty ? plList[0] : null;
          shopList = fetchedShopList!;
+         dropdownShop = shopList.isNotEmpty ? shopList[0] : null;
          machineList = fetchedMachineList!;
+         dropdownMachine = machineList.isNotEmpty ? machineList[0] : null;
        });
      }
   }
