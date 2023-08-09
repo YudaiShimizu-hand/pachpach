@@ -9,7 +9,7 @@ class DropDownData {
   String dataName;
   String dataValue;
 
-  Future<void> postDropdownData() async{
+  Future<void> postDropdown() async{
     final url = 'http://localhost:8081/api/v1/$otherUrl';
     final response = await http.post(
         Uri.parse(url),

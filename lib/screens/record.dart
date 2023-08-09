@@ -7,8 +7,9 @@ import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/components/input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pachpach/services/dropdownData.dart';
+import 'package:pachpach/services/postDropdownData.dart';
 import 'package:pachpach/services/getDropDownData.dart';
+import 'package:pachpach/services/postRecordData.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({super.key});
@@ -26,9 +27,17 @@ class _RecordPage extends State<RecordPage> {
   String? dropdownMachine;
 
   final controller = TextEditingController();
+  final investmentController = TextEditingController();
+  final proceedsController = TextEditingController();
   final focusNode = FocusNode();
-
   late String getToken;
+
+  int? get intInvestmentValue {
+    return int.tryParse(investmentController.text);
+  }
+  int? get intProceedsValue {
+    return int.tryParse(proceedsController.text);
+  }
 
   @override
   void initState(){
@@ -115,7 +124,7 @@ class _RecordPage extends State<RecordPage> {
                                 plList.add(placeValue);
                                 dropdownPlace = placeValue;
                                 final dataInstance = DropDownData(getToken: getToken, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
-                                dataInstance.postDropdownData();
+                                dataInstance.postDropdown();
                                 controller.clear();
                               });
                               Navigator.pop(context);
@@ -129,7 +138,7 @@ class _RecordPage extends State<RecordPage> {
                                   plList.add(placeValue);
                                   dropdownPlace = placeValue;
                                   final dataInstance = DropDownData(getToken: getToken, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
-                                  dataInstance.postDropdownData();
+                                  dataInstance.postDropdown();
                                   controller.clear();
                                 });
                                 Navigator.pop(context);
@@ -199,7 +208,7 @@ class _RecordPage extends State<RecordPage> {
                               shopList.add(shopValue);
                               dropdownShop = shopValue;
                               final dataInstance = DropDownData(getToken: getToken, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
-                              dataInstance.postDropdownData();
+                              dataInstance.postDropdown();
                               controller.clear();
                             });
                             Navigator.pop(context);
@@ -213,7 +222,7 @@ class _RecordPage extends State<RecordPage> {
                                 shopList.add(shopValue);
                                 dropdownShop = shopValue;
                                 final dataInstance = DropDownData(getToken: getToken, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
-                                dataInstance.postDropdownData();
+                                dataInstance.postDropdown();
                                 controller.clear();
                               });
                               Navigator.pop(context);
@@ -283,7 +292,7 @@ class _RecordPage extends State<RecordPage> {
                               machineList.add(machineValue);
                               dropdownMachine = machineValue;
                               final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
-                              dataInstance.postDropdownData();
+                              dataInstance.postDropdown();
                               controller.clear();
                             });
                             Navigator.pop(context);
@@ -297,7 +306,7 @@ class _RecordPage extends State<RecordPage> {
                                 machineList.add(machineValue);
                                 dropdownMachine = machineValue;
                                 final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
-                                dataInstance.postDropdownData();
+                                dataInstance.postDropdown();
                                 controller.clear();
                               });
                               Navigator.pop(context);
@@ -347,7 +356,25 @@ class _RecordPage extends State<RecordPage> {
                 color: Colors.black,
               ),
             ),
-            InputCmp(keyTyp: TextInputType.number),
+            SizedBox(
+              width: 200,
+              height: 30,
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: investmentController,
+                keyboardType: TextInputType.number,
+                style: TextStyle(
+                    color: Colors.black
+                ),
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    )
+                ),
+              ),
+            ),
             KSpace,
             const Text(
               '回収額(円)',
@@ -356,9 +383,37 @@ class _RecordPage extends State<RecordPage> {
                 color: Colors.black,
               ),
             ),
-            InputCmp(keyTyp: TextInputType.number),
+            SizedBox(
+              width: 200,
+              height: 30,
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: proceedsController,
+                keyboardType: TextInputType.number,
+                style: TextStyle(
+                    color: Colors.black
+                ),
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    )
+                ),
+              ),
+            ),
             KSecondSpace,
-            ButtonCmp(clickHand: (){}, txt: '記録する', mt: 5),
+            ButtonCmp(clickHand: (){
+              final postData = PostRecord(
+                  getToken: getToken,
+                  placeValue: dropdownPlace,
+                  shopValue: dropdownShop,
+                  machineValue: dropdownMachine,
+                  investmentValue: intInvestmentValue!,
+                  proceedsValue: intProceedsValue!,
+              );
+              Navigator.pushNamed(context, "/");
+            }, txt: '記録する', mt: 5),
           ],
         ),
         ),
