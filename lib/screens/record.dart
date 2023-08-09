@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/components/input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pachpach/services/dropdownData.dart';
+import 'package:pachpach/services/getDropDownData.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({super.key});
@@ -16,12 +18,12 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPage extends State<RecordPage> {
-  final List<String> plList = <String>["渋谷", '新宿', '池袋', '品川'];
+  List<String> plList = [];
+  final List<String> machineList = <String>["GAIA", 'エスパス', '楽園'];
   final List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
-  final List<String> machineList = <String>["エヴァンゲリオン", 'ジャグラー', 'ウニコーン', '大工の源さん'];
-  String dropdownPlace = "渋谷";
+  String? dropdownPlace;
   String dropdownShop = "GAIA";
-  String dropdownMachine = "エヴァンゲリオン";
+  String dropdownMachine = "GAIA";
 
   final controller = TextEditingController();
   final focusNode = FocusNode();
@@ -34,14 +36,18 @@ class _RecordPage extends State<RecordPage> {
     initFirebaseToken();
   }
 
-  void initFirebaseToken() async{
+ void initFirebaseToken() async{
      final _auth = await FirebaseAuth.instance.currentUser;
      if(_auth != null){
        final tokenResult = await _auth.getIdTokenResult();
-       setState(() {
-         getToken = tokenResult.token!;
-         print(getToken);
-       });
+       getToken = tokenResult.token!;
+       print(getToken);
+       final List<String>? fetchedPlList = await getPlList(getToken);
+       if (fetchedPlList != null) {
+         setState(() {
+           plList = fetchedPlList;
+         });
+       }
      }
   }
 
@@ -104,6 +110,7 @@ class _RecordPage extends State<RecordPage> {
                               setState(() {
                                 String placeValue = controller.text;
                                 plList.add(placeValue);
+                                dropdownPlace = placeValue;
                                 final dataInstance = DropDownData(getToken: getToken, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
                                 dataInstance.postDropdownData();
                                 controller.clear();
@@ -117,6 +124,7 @@ class _RecordPage extends State<RecordPage> {
                                 setState(() {
                                   String placeValue = controller.text;
                                   plList.add(placeValue);
+                                  dropdownPlace = placeValue;
                                   final dataInstance = DropDownData(getToken: getToken, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
                                   dataInstance.postDropdownData();
                                   controller.clear();
