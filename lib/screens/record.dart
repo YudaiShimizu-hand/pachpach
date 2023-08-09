@@ -408,13 +408,14 @@ class _RecordPage extends State<RecordPage> {
             KSecondSpace,
             ButtonCmp(clickHand: (){
               final postData = PostRecord(
-                  getToken: getToken,
-                  placeValue: dropdownPlace,
-                  shopValue: dropdownShop,
-                  machineValue: dropdownMachine,
-                  investmentValue: intInvestmentValue!,
-                  proceedsValue: intProceedsValue!,
+                getToken: getToken,
+                placeValue: dropdownPlace,
+                shopValue: dropdownShop,
+                machineValue: dropdownMachine,
+                investmentValue: intInvestmentValue!,
+                proceedsValue: intProceedsValue!,
               );
+              postData.postDropdown();
               Navigator.pushNamed(context, "/");
             }, txt: '記録する', mt: 5),
           ],
