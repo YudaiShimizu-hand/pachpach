@@ -19,11 +19,11 @@ class RecordPage extends StatefulWidget {
 
 class _RecordPage extends State<RecordPage> {
   List<String> plList = [];
-  final List<String> machineList = <String>["GAIA", 'エスパス', '楽園'];
-  final List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
+  List<String> machineList = [];
+  List<String> shopList = [];
   String? dropdownPlace;
-  String dropdownShop = "GAIA";
-  String dropdownMachine = "GAIA";
+  String? dropdownShop;
+  String? dropdownMachine;
 
   final controller = TextEditingController();
   final focusNode = FocusNode();
@@ -42,12 +42,15 @@ class _RecordPage extends State<RecordPage> {
        final tokenResult = await _auth.getIdTokenResult();
        getToken = tokenResult.token!;
        print(getToken);
-       final List<String>? fetchedPlList = await getPlList(getToken);
-       if (fetchedPlList != null) {
-         setState(() {
-           plList = fetchedPlList;
-         });
-       }
+       GetList getList = GetList(getToken: getToken);
+       final List<String>? fetchedPlList = await getList.fetchDropDownData('place', 'place_name');
+       final List<String>? fetchedShopList = await getList.fetchDropDownData('shop', 'shop_name');
+       final List<String>? fetchedMachineList = await getList.fetchDropDownData('machine', 'machine_name');
+       setState(() {
+         plList = fetchedPlList!;
+         shopList = fetchedShopList!;
+         machineList = fetchedMachineList!;
+       });
      }
   }
 
@@ -194,6 +197,7 @@ class _RecordPage extends State<RecordPage> {
                             setState(() {
                               String shopValue = controller.text;
                               shopList.add(shopValue);
+                              dropdownShop = shopValue;
                               final dataInstance = DropDownData(getToken: getToken, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
                               dataInstance.postDropdownData();
                               controller.clear();
@@ -207,6 +211,7 @@ class _RecordPage extends State<RecordPage> {
                               setState(() {
                                 String shopValue = controller.text;
                                 shopList.add(shopValue);
+                                dropdownShop = shopValue;
                                 final dataInstance = DropDownData(getToken: getToken, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
                                 dataInstance.postDropdownData();
                                 controller.clear();
@@ -276,6 +281,7 @@ class _RecordPage extends State<RecordPage> {
                             setState(() {
                               String machineValue = controller.text;
                               machineList.add(machineValue);
+                              dropdownMachine = machineValue;
                               final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
                               dataInstance.postDropdownData();
                               controller.clear();
@@ -289,6 +295,7 @@ class _RecordPage extends State<RecordPage> {
                               setState(() {
                                 String machineValue = controller.text;
                                 machineList.add(machineValue);
+                                dropdownMachine = machineValue;
                                 final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
                                 dataInstance.postDropdownData();
                                 controller.clear();
