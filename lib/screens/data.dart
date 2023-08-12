@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
-import 'package:pachpach/components/button.dart';
+// import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
+import 'package:pachpach/services/riverPod/setProvider.dart';
+import 'package:riverpod/riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DataPage extends StatefulWidget {
   const DataPage({super.key});
@@ -11,12 +14,9 @@ class DataPage extends StatefulWidget {
 }
 
 class _DataPage extends State<DataPage> {
-  static const List<String> plList = <String>["渋谷", '新宿', '池袋', '品川'];
-  static const List<String> shopList = <String>["GAIA", 'エスパス', '楽園'];
-  static const List<String> machineList = <String>["エヴァンゲリオン", 'ジャグラー', 'ウニコーン', '大工の源さん'];
-  String dropdownPlace = plList.first;
-  String dropdownShop = shopList.first;
-  String dropdownMachine = machineList.first;
+  String? dropdownPlace;
+  String? dropdownShop;
+  String? dropdownMachine;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +38,12 @@ class _DataPage extends State<DataPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                              DropdownButton<String>(
-                              value: dropdownPlace,
+                            Consumer(builder: (context, watch, child){
+                              final places = watch(placeProvider);
+                              return DropdownButton<String>(
+                                alignment: Alignment.center,
+                                dropdownColor: Colors.black,
+                                value: dropdownPlace ?? places.data?.value?.first,
                                 icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
                                 isExpanded: true,
                                 elevation: 16,
@@ -54,59 +58,76 @@ class _DataPage extends State<DataPage> {
                                     dropdownPlace = value!;
                                   });
                                 },
-                                items: plList.map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            DropdownButton<String>(
-                              value: dropdownShop,
-                              icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor)),
-                              isExpanded: true,
-                              elevation: 16,
-                              style: const TextStyle(color: Color(KbaseColor)),
-                              underline: Container(
-                                height: 2,
-                                color: Color(KbaseColor),
-                              ),
-                              onChanged: (String? value) {
-                                // This is called when the user selects an item.
-                                setState(() {
-                                  dropdownShop = value!;
-                                });
-                              },
-                              items: shopList.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            DropdownButton<String>(
-                              value: dropdownMachine,
-                              icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor)),
-                              isExpanded: true,
-                              elevation: 16,
-                              style: const TextStyle(color: Color(KbaseColor)),
-                              underline: Container(
-                                height: 2,
-                                color: Color(KbaseColor),
-                              ),
-                              onChanged: (String? value) {
-                                // This is called when the user selects an item.
-                                setState(() {
-                                  dropdownMachine = value!;
-                                });
-                              },
-                              items: machineList.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
+                                items: places.when(
+                                  data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value)
+                                    );
+                                  }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                                ),
+                              );
+                            }),
+                            Consumer(builder: (context, watch, child){
+                              final shops = watch(shopProvider);
+                              return DropdownButton<String>(
+                                alignment: Alignment.center,
+                                dropdownColor: Colors.black,
+                                value: dropdownShop ?? shops.data?.value?.first,
+                                icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
+                                isExpanded: true,
+                                elevation: 16,
+                                style: const TextStyle(color: Color(KbaseColor)),
+                                underline: Container(
+                                  height: 2,
+                                  color: Color(KbaseColor),
+                                ),
+                                onChanged: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {
+                                    dropdownShop = value!;
+                                  });
+                                },
+                                items: shops.when(
+                                  data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value)
+                                    );
+                                  }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                                ),
+                              );
+                            }),
+                            Consumer(builder: (context, watch, child){
+                              final machines = watch(machineProvider);
+                              return DropdownButton<String>(
+                                alignment: Alignment.center,
+                                dropdownColor: Colors.black,
+                                value: dropdownMachine ?? machines.data?.value?.first,
+                                icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
+                                isExpanded: true,
+                                elevation: 16,
+                                style: const TextStyle(color: Color(KbaseColor)),
+                                underline: Container(
+                                  height: 2,
+                                  color: Color(KbaseColor),
+                                ),
+                                onChanged: (String? value) {
+                                  // This is called when the user selects an item.
+                                  setState(() {
+                                    dropdownMachine = value!;
+                                  });
+                                },
+                                items: machines.when(
+                                  data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value)
+                                    );
+                                  }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                                ),
+                              );
+                            }),
                           ],
                         ),
                   )),
