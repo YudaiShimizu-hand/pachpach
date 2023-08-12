@@ -2,8 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
+import 'package:pachpach/screens/record.dart';
+import 'package:riverpod/riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pachpach/services/riverPod/setProvider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
+
+  @override
+  void initState(){
+    super.initState();
+    initFirebaseToken(context);
+  }
 
   @override
   Widget build(BuildContext context) {

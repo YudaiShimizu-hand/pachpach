@@ -10,6 +10,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pachpach/services/postDropdownData.dart';
 import 'package:pachpach/services/getDropDownData.dart';
 import 'package:pachpach/services/postRecordData.dart';
+import 'package:riverpod/riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pachpach/services/riverPod/placeNotifier.dart';
+import 'package:pachpach/services/riverPod/setProvider.dart';
+
 
 class RecordPage extends StatefulWidget {
   const RecordPage({super.key});
@@ -19,9 +24,6 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPage extends State<RecordPage> {
-  List<String> plList = [];
-  List<String> machineList = [];
-  List<String> shopList = [];
   String? dropdownPlace;
   String? dropdownShop;
   String? dropdownMachine;
@@ -30,7 +32,7 @@ class _RecordPage extends State<RecordPage> {
   final investmentController = TextEditingController();
   final proceedsController = TextEditingController();
   final focusNode = FocusNode();
-  late String getToken;
+  // late String getToken;
 
   int? get intInvestmentValue {
     return int.tryParse(investmentController.text);
@@ -40,34 +42,8 @@ class _RecordPage extends State<RecordPage> {
   }
 
   @override
-  void initState(){
-    super.initState();
-    initFirebaseToken();
-  }
-
- void initFirebaseToken() async{
-     final _auth = await FirebaseAuth.instance.currentUser;
-     if(_auth != null){
-       final tokenResult = await _auth.getIdTokenResult();
-       getToken = tokenResult.token!;
-       print(getToken);
-       GetList getList = GetList(getToken: getToken);
-       final List<String>? fetchedPlList = await getList.fetchDropDownData('place', 'place_name');
-       final List<String>? fetchedShopList = await getList.fetchDropDownData('shop', 'shop_name');
-       final List<String>? fetchedMachineList = await getList.fetchDropDownData('machine', 'machine_name');
-       setState(() {
-         plList = fetchedPlList!;
-         dropdownPlace = plList.isNotEmpty ? plList[0] : null;
-         shopList = fetchedShopList!;
-         dropdownShop = shopList.isNotEmpty ? shopList[0] : null;
-         machineList = fetchedMachineList!;
-         dropdownMachine = machineList.isNotEmpty ? machineList[0] : null;
-       });
-     }
-  }
-
-  @override
   Widget build(BuildContext context){
+    final getToken = context.read(tokenProvider).state;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBarCmp(isBtn: 'Record'),
@@ -122,29 +98,31 @@ class _RecordPage extends State<RecordPage> {
                             controller: controller,
                             onFieldSubmitted: (_) {
                               // エンターを押したときに実行される
-                              setState(() {
                                 String placeValue = controller.text;
-                                plList.add(placeValue);
-                                dropdownPlace = placeValue;
-                                final dataInstance = DropDownData(getToken: getToken, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
-                                dataInstance.postDropdown();
                                 controller.clear();
-                              });
-                              Navigator.pop(context);
+                                Navigator.pop(context, placeValue);
+                                final placeNotifier = context.read(placeNotifierProvider);
+                                placeNotifier.addPlace(placeValue);
+                                setState(() {
+                                  dropdownPlace = placeValue;
+                                  final dataInstance = DropDownData(getToken: getToken!, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
+                                  dataInstance.postDropdown();
+                                });
                             }
                           ),
                           actions: [
                             TextButton(
                               onPressed: () {
+                                String placeValue = controller.text;
+                                controller.clear();
+                                Navigator.pop(context, placeValue);
+                                final placeNotifier = context.read(placeNotifierProvider);
+                                placeNotifier.addPlace(placeValue);
                                 setState(() {
-                                  String placeValue = controller.text;
-                                  plList.add(placeValue);
                                   dropdownPlace = placeValue;
-                                  final dataInstance = DropDownData(getToken: getToken, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
+                                  final dataInstance = DropDownData(getToken: getToken!, otherUrl: 'place', dataName: 'place_name', dataValue: placeValue);
                                   dataInstance.postDropdown();
-                                  controller.clear();
                                 });
-                                Navigator.pop(context);
                               },
                               child: const Text('追加'),
                             )
@@ -157,32 +135,37 @@ class _RecordPage extends State<RecordPage> {
             ),
             SizedBox(
               width: 160,
-              child: DropdownButton<String>(
-                alignment: Alignment.center,
-                dropdownColor: Colors.white,
-                value: dropdownPlace,
-                icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
-                isExpanded: true,
-                elevation: 16,
-                style: const TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.white,
-                ),
-                onChanged: (String? value) {
-                  // This is called when the user selects an item.
-                  setState(() {
-                    dropdownPlace = value!;
-                  });
-                },
-                items: plList.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+              child: Consumer(builder: (context, watch, child){
+                final places = watch(placeProvider);
+                  return DropdownButton<String>(
+                    alignment: Alignment.center,
+                    dropdownColor: Colors.white,
+                    value: dropdownPlace ?? places.data?.value?.first,
+                    icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
+                    isExpanded: true,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.white,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownPlace = value!;
+                      });
+                    },
+                    items: places.when(
+                      data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                         value: value,
+                         child: Text(value)
+                        );
+                      }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                    ),
                   );
-                }).toList(),
+               })
               ),
-            ),
             KSpace,
             Container(
               height: 25,
@@ -206,29 +189,31 @@ class _RecordPage extends State<RecordPage> {
                           controller: controller,
                           onFieldSubmitted: (_) {
                             // エンターを押したときに実行される
+                            String shopValue = controller.text;
+                            controller.clear();
+                            Navigator.pop(context, shopValue);
+                            final shopNotifier = context.read(shopNotifierProvider);
+                            shopNotifier.addShop(shopValue);
                             setState(() {
-                              String shopValue = controller.text;
-                              shopList.add(shopValue);
                               dropdownShop = shopValue;
-                              final dataInstance = DropDownData(getToken: getToken, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
+                              final dataInstance = DropDownData(getToken: getToken!, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
                               dataInstance.postDropdown();
-                              controller.clear();
                             });
-                            Navigator.pop(context);
                           },
                         ),
                         actions: [
                           TextButton(
                             onPressed: () {
+                              String shopValue = controller.text;
+                              controller.clear();
+                              Navigator.pop(context, shopValue);
+                              final shopNotifier = context.read(shopNotifierProvider);
+                              shopNotifier.addShop(shopValue);
                               setState(() {
-                                String shopValue = controller.text;
-                                shopList.add(shopValue);
                                 dropdownShop = shopValue;
-                                final dataInstance = DropDownData(getToken: getToken, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
+                                final dataInstance = DropDownData(getToken: getToken!, otherUrl: 'shop', dataName: 'shop_name', dataValue: shopValue);
                                 dataInstance.postDropdown();
-                                controller.clear();
                               });
-                              Navigator.pop(context);
                             },
                             child: const Text('追加'),
                           )
@@ -240,32 +225,37 @@ class _RecordPage extends State<RecordPage> {
               ),
             ),
             SizedBox(
-              width: 160,
-              child: DropdownButton<String>(
-                alignment: Alignment.center,
-                dropdownColor: Colors.white,
-                value: dropdownShop,
-                icon: const Icon(Icons.arrow_circle_down, color: Colors.white),
-                isExpanded: true,
-                elevation: 16,
-                style: const TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.white,
-                ),
-                onChanged: (String? value) {
-                  // This is called when the user selects an item.
-                  setState(() {
-                    dropdownShop = value!;
-                  });
-                },
-                items: shopList.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+                width: 160,
+                child: Consumer(builder: (context, watch, child){
+                  final shops = watch(shopProvider);
+                  return DropdownButton<String>(
+                    alignment: Alignment.center,
+                    dropdownColor: Colors.white,
+                    value: dropdownShop ?? shops.data?.value?.first,
+                    icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
+                    isExpanded: true,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.white,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownShop = value!;
+                      });
+                    },
+                    items: shops.when(
+                      data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value)
+                        );
+                      }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                    ),
                   );
-                }).toList(),
-              ),
+                })
             ),
             KSpace,
             Container(
@@ -290,29 +280,31 @@ class _RecordPage extends State<RecordPage> {
                           controller: controller,
                           onFieldSubmitted: (_) {
                             // エンターを押したときに実行される
+                            String machineValue = controller.text;
+                            controller.clear();
+                            Navigator.pop(context, machineValue);
+                            final machineNotifier = context.read(machineNotifierProvider);
+                            machineNotifier.addMachine(machineValue);
                             setState(() {
-                              String machineValue = controller.text;
-                              machineList.add(machineValue);
                               dropdownMachine = machineValue;
-                              final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
+                              final dataInstance = DropDownData(getToken: getToken!, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
                               dataInstance.postDropdown();
-                              controller.clear();
                             });
-                            Navigator.pop(context);
                           },
                         ),
                         actions: [
                           TextButton(
                             onPressed: () {
+                              String machineValue = controller.text;
+                              controller.clear();
+                              Navigator.pop(context, machineValue);
+                              final machineNotifier = context.read(machineNotifierProvider);
+                              machineNotifier.addMachine(machineValue);
                               setState(() {
-                                String machineValue = controller.text;
-                                machineList.add(machineValue);
                                 dropdownMachine = machineValue;
-                                final dataInstance = DropDownData(getToken: getToken, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
+                                final dataInstance = DropDownData(getToken: getToken!, otherUrl: 'machine', dataName: 'machine_name', dataValue: machineValue);
                                 dataInstance.postDropdown();
-                                controller.clear();
                               });
-                              Navigator.pop(context);
                             },
                             child: const Text('追加'),
                           )
@@ -324,32 +316,37 @@ class _RecordPage extends State<RecordPage> {
               ),
             ),
             SizedBox(
-              width: 160,
-              child: DropdownButton<String>(
-                alignment: Alignment.center,
-                dropdownColor: Colors.white,
-                value: dropdownMachine,
-                icon: const Icon(Icons.arrow_circle_down, color: Colors.white),
-                isExpanded: true,
-                elevation: 16,
-                style: const TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.white,
-                ),
-                onChanged: (String? value) {
-                  // This is called when the user selects an item.
-                  setState(() {
-                    dropdownMachine = value!;
-                  });
-                },
-                items: machineList.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+                width: 160,
+                child: Consumer(builder: (context, watch, child){
+                  final machines = watch(machineProvider);
+                  return DropdownButton<String>(
+                    alignment: Alignment.center,
+                    dropdownColor: Colors.white,
+                    value: dropdownMachine ?? machines.data?.value?.first,
+                    icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
+                    isExpanded: true,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.white,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownMachine = value!;
+                      });
+                    },
+                    items: machines.when(
+                      data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value)
+                        );
+                      }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                    ),
                   );
-                }).toList(),
-              ),
+                })
             ),
             KSpace,
             const Text(
@@ -408,7 +405,7 @@ class _RecordPage extends State<RecordPage> {
             KSecondSpace,
             ButtonCmp(clickHand: (){
               final postData = PostRecord(
-                getToken: getToken,
+                getToken: getToken!,
                 placeValue: dropdownPlace,
                 shopValue: dropdownShop,
                 machineValue: dropdownMachine,
