@@ -1,18 +1,12 @@
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
-import 'package:pachpach/components/input.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pachpach/services/postDropdownData.dart';
-import 'package:pachpach/services/getDropDownData.dart';
 import 'package:pachpach/services/postRecordData.dart';
-import 'package:riverpod/riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pachpach/services/riverPod/placeNotifier.dart';
 import 'package:pachpach/services/riverPod/setProvider.dart';
 
 

@@ -22,6 +22,7 @@ final placeNotifierProvider = ChangeNotifierProvider((ref) => PlaceNotifier());
 
 final placeProvider = FutureProvider<List<String>?>((ref) async{
   final getToken = ref.watch(tokenProvider).state;
+  print(getToken);
   if(getToken != null){
     GetList getList = GetList(getToken: getToken);
     final places =  await getList.fetchDropDownData('place', 'place_name');

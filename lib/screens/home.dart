@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
-import 'package:pachpach/screens/record.dart';
-import 'package:riverpod/riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pachpach/services/riverPod/setProvider.dart';
 
 class HomePage extends StatefulWidget {
