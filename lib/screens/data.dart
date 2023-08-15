@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/services/riverPod/setProvider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 class DataPage extends StatefulWidget {
   const DataPage({super.key});
@@ -15,8 +17,35 @@ class _DataPage extends State<DataPage> {
   String? dropdownPlace;
   String? dropdownShop;
   String? dropdownMachine;
+  late Map<String, dynamic> quertParams;
+
+  late double _fechAnalysisNum = 0;
+
+  Future<void> fetchAnalysisData(String getToken, Map<String, dynamic> queryParams) async {
+    final response = await http.get(
+      Uri.parse('http://localhost:8081/api/v1/data/analysis').replace(queryParameters: queryParams),
+      headers: {
+        'Authorization': 'Bearer $getToken',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // サーバーが成功のステータスコード200を返す場合、JSONを解析します。
+      setState(() {
+        _fechAnalysisNum = (json.decode(response.body) as num).toDouble();
+      });
+    } else {
+      // サーバーがエラーレスポンスを返す場合、エラーをスローします。
+      print('HTTP Status Code: ${response.statusCode}');
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final getToken = context.read(tokenProvider).state;
     return Scaffold(
       appBar: AppBarCmp(isBtn: 'Data'),
       body: Center(
@@ -133,7 +162,19 @@ class _DataPage extends State<DataPage> {
                       child: Container(
                         margin: EdgeInsets.only(left: 20),
                         child: ElevatedButton.icon(
-                          onPressed: (){
+                          onPressed: () async{
+                            setState(() {
+                              quertParams = {
+                                'place_name' : dropdownPlace,
+                                'shop_name' : dropdownShop,
+                                'machine_name' : dropdownMachine,
+                              };
+                              print(quertParams);
+                            });
+                            fetchAnalysisData(
+                                getToken!,
+                                quertParams
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(50, 50),
@@ -167,11 +208,9 @@ class _DataPage extends State<DataPage> {
               child: Column(
                 children: <Widget>[
                   KSecondSpace,
-                  // Text('渋谷エスパス',style: TextStyle(color: Colors.black),),
-                  // Text('エヴァンゲリオン',style: TextStyle(color: Colors.black),),
                   Text('勝率は',style: TextStyle(color: Colors.black, fontSize: 20),),
                   KSpace,
-                  Text('  94%',style: TextStyle(fontSize: 60),),
+                  Text('  $_fechAnalysisNum %',style: TextStyle(fontSize: 60),),
                 ],
               ),
             ),
@@ -193,9 +232,30 @@ class _DataPage extends State<DataPage> {
                 ],
               ),
               child: Center(
-                child: Text(
-                    'この店、この台はいいです',
-                  style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if(_fechAnalysisNum == 0)
+                      Text(
+                        '取得中',
+                        style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                      )
+                    else if(_fechAnalysisNum > 80)
+                      Text(
+                        '勝率かなり高いです',
+                        style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                      )
+                    else if(_fechAnalysisNum > 40)
+                      Text(
+                        '勝率はぼちぼちです',
+                        style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                      )
+                    else
+                      Text(
+                        '勝率はあまり良くないです',
+                        style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                  ],
                 ),
               ),
             )
