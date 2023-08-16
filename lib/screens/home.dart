@@ -4,6 +4,7 @@ import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/services/riverPod/setProvider.dart';
 import 'package:pachpach/services/totalData.dart';
+import 'package:pachpach/services/monthTotalData.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -87,13 +88,7 @@ class _HomePage extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           TotalDataWidget(),
-                          Text(
-                            '-1400円',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                          ),
+                          MonthTotalDataWidget(),
                         ],
                       ),
                     ),
@@ -110,12 +105,6 @@ class _HomePage extends State<HomePage> {
             ButtonCmp(clickHand: (){
               Navigator.pushNamed(context, '/data');
             }, txt: 'データ', mt: 30),
-            ButtonCmp(clickHand: (){
-              Navigator.pushNamed(context, '/signin');
-            },txt: 'サインイン', mt: 30),
-            ButtonCmp(clickHand: (){
-              Navigator.pushNamed(context, '/login');
-            }, txt: 'ログイン', mt: 30),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

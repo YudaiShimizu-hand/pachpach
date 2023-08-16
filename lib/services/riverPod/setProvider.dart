@@ -94,4 +94,27 @@ final totalProvider = FutureProvider<int>((ref) async{
   }
 });
 
+final monthTotalProvider = FutureProvider<int>((ref) async{
+  int now = DateTime.now().month;
+
+  final getToken = ref.watch(tokenProvider).state;
+  final response = await http.get(
+    Uri.parse('http://localhost:8081/api/v1/data/monthTotal?month=$now'),
+    headers: {
+      'Authorization': 'Bearer $getToken',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    // サーバーが成功のステータスコード200を返す場合、JSONを解析します。
+    return int.parse(jsonDecode(response.body).toString());
+  } else {
+    // サーバーがエラーレスポンスを返す場合、エラーをスローします。
+    print('HTTP Status Code: ${response.statusCode}');
+    throw Exception('Failed to load data');
+  }
+});
+
 
