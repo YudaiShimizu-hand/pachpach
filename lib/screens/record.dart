@@ -408,6 +408,7 @@ class _RecordPage extends State<RecordPage> {
               );
               postData.postDropdown();
               context.refresh(totalProvider);
+              context.refresh(monthTotalProvider);
               Navigator.pushNamed(context, "/");
             }, txt: '記録する', mt: 5),
           ],
