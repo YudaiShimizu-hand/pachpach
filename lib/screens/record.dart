@@ -407,6 +407,7 @@ class _RecordPage extends State<RecordPage> {
                 proceedsValue: intProceedsValue!,
               );
               postData.postDropdown();
+              context.refresh(totalProvider);
               Navigator.pushNamed(context, "/");
             }, txt: '記録する', mt: 5),
           ],

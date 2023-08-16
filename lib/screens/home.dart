@@ -3,6 +3,7 @@ import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
 import 'package:pachpach/services/riverPod/setProvider.dart';
+import 'package:pachpach/services/totalData.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -84,14 +85,8 @@ class _HomePage extends State<HomePage> {
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const <Widget>[
-                          Text(
-                            '+2300000円',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                          ),
+                        children: <Widget>[
+                          TotalDataWidget(),
                           Text(
                             '-1400円',
                             style: TextStyle(
@@ -115,7 +110,7 @@ class _HomePage extends State<HomePage> {
             ButtonCmp(clickHand: (){
               Navigator.pushNamed(context, '/data');
             }, txt: 'データ', mt: 30),
-             ButtonCmp(clickHand: (){
+            ButtonCmp(clickHand: (){
               Navigator.pushNamed(context, '/signin');
             },txt: 'サインイン', mt: 30),
             ButtonCmp(clickHand: (){
