@@ -9,12 +9,12 @@ class FirstPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 200,
+              height: 150,
             ),
             Image.asset(
               KbaseImg,
-              width: 300,
-              height: 100,
+              width: 400,
+              height: 200,
             ),
             KSpace,
             Text('より楽しく、お金を増やそう'),

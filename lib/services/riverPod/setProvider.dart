@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:pachpach/services/riverPod/placeNotifier.dart';
 import 'package:pachpach/services/riverPod/shopNotifier.dart';
@@ -73,7 +72,6 @@ final machineProvider = FutureProvider<List<String>?>((ref) async{
   }
 });
 
-
 final totalProvider = FutureProvider<int>((ref) async{
   final getToken = ref.watch(tokenProvider).state;
   final response = await http.get(
@@ -86,7 +84,6 @@ final totalProvider = FutureProvider<int>((ref) async{
   );
 
   if (response.statusCode == 200) {
-    // サーバーが成功のステータスコード200を返す場合、JSONを解析します。
     return int.parse(jsonDecode(response.body).toString());
   } else {
     // サーバーがエラーレスポンスを返す場合、エラーをスローします。
