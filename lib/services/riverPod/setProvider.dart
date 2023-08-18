@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pachpach/services/getDropDownData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:pachpach/screens/calendar.dart';
 
 
 final tokenProvider = StateProvider<String?>((ref) => null);
@@ -117,4 +118,33 @@ final monthTotalProvider = FutureProvider<int>((ref) async{
   }
 });
 
+
+final eventDataProvider = FutureProvider.autoDispose<List<EventData>>((ref) async {
+
+  final getToken = ref.watch(tokenProvider).state;
+  final url = 'http://localhost:8081/api/v1/data/calendar';
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Authorization': 'Bearer $getToken',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final List<dynamic> jsonData = json.decode(response.body);
+    return jsonData
+        .map((data) => EventData(
+        place: data['place_name'],
+        shop: data['shop_name'],
+        machine: data['machine_name'],
+        score: data['score'].toString(),
+        date: DateTime.parse(data['created_at'])
+    )).toList();
+  } else {
+    print('Error: ${response.statusCode} ${response.reasonPhrase}');
+    throw Exception('Failed to load events');
+  }
+});
 
