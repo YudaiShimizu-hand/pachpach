@@ -1,4 +1,3 @@
-// import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
@@ -26,7 +25,6 @@ class _RecordPage extends State<RecordPage> {
   final investmentController = TextEditingController();
   final proceedsController = TextEditingController();
   final focusNode = FocusNode();
-  // late String getToken;
 
   int? get intInvestmentValue {
     return int.tryParse(investmentController.text);
@@ -155,7 +153,16 @@ class _RecordPage extends State<RecordPage> {
                          value: value,
                          child: Text(value)
                         );
-                      }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                      }).toList(),
+                      loading: () {
+                        return [
+                          DropdownMenuItem<String>(
+                            value: null,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ];
+                      },
+                      error: (Object error, StackTrace? stackTrace) {  },
                     ),
                   );
                })
@@ -246,7 +253,16 @@ class _RecordPage extends State<RecordPage> {
                             value: value,
                             child: Text(value)
                         );
-                      }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                      }).toList(),
+                      loading: () {
+                        return [
+                          DropdownMenuItem<String>(
+                            value: null,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ];
+                      },
+                      error: (Object error, StackTrace? stackTrace) {  },
                     ),
                   );
                 })
@@ -337,7 +353,16 @@ class _RecordPage extends State<RecordPage> {
                             value: value,
                             child: Text(value)
                         );
-                      }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                      }).toList(),
+                      loading: () {
+                        return [
+                          DropdownMenuItem<String>(
+                            value: null,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ];
+                      },
+                      error: (Object error, StackTrace? stackTrace) {  },
                     ),
                   );
                 })

@@ -91,7 +91,15 @@ class _DataPage extends State<DataPage> {
                                         value: value,
                                         child: Text(value)
                                     );
-                                  }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                                  }).toList(),
+                                  loading: () {
+                                    return [
+                                      DropdownMenuItem<String>(
+                                        value: null,
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ];
+                                  }, error: (Object error, StackTrace? stackTrace) {  },
                                 ),
                               );
                             }),
@@ -151,7 +159,16 @@ class _DataPage extends State<DataPage> {
                                         value: value,
                                         child: Text(value)
                                     );
-                                  }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                                  }).toList(),
+                                  loading: () {
+                                    return [
+                                      DropdownMenuItem<String>(
+                                        value: null,
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ];
+                                  },
+                                  error: (Object error, StackTrace? stackTrace) {  },
                                 ),
                               );
                             }),
