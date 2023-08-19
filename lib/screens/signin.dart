@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:pachpach/components/appBar.dart';
 import 'package:pachpach/components/button.dart';
 import 'package:pachpach/constants.dart';
@@ -42,7 +41,7 @@ class _SigninPage extends State<SigninPage> {
         child: Column(
           children: <Widget>[
             const SizedBox(
-              height: 50,
+              height: 70,
             ),
             const Text(
               '新規登録',
@@ -84,7 +83,7 @@ class _SigninPage extends State<SigninPage> {
                 },
               ),
             ),
-            KSpace,
+            KThirdSpace,
             const Text(
               'パスワード',
               style: TextStyle(
@@ -114,15 +113,6 @@ class _SigninPage extends State<SigninPage> {
                 },
               ),
             ),
-            KSpace,
-            // const Text(
-            //   'パスワード確認',
-            //   style: TextStyle(
-            //     fontSize: 15,
-            //     color: Colors.black,
-            //   ),
-            // ),
-            // InputCmp(keyTyp: TextInputType.text),
             KSecondSpace,
             ButtonCmp(
                 clickHand: ()async{

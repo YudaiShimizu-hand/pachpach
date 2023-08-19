@@ -41,7 +41,7 @@ class _LoginPage extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             const SizedBox(
-              height: 50,
+              height: 70,
             ),
             const Text(
               'ログイン',
@@ -83,7 +83,7 @@ class _LoginPage extends State<LoginPage> {
                 },
               ),
             ),
-            KSpace,
+            KThirdSpace,
             const Text(
               'パスワード',
               style: TextStyle(
@@ -124,7 +124,7 @@ class _LoginPage extends State<LoginPage> {
                 print(e);
               }
             }, txt: 'ログイン', mt: 5),
-            KSpace,
+            KThirdSpace,
             TextButton(onPressed: (){Navigator.pushNamed(context, '/signin');}, child: Text("新規登録"))
           ],
         ),

@@ -19,7 +19,7 @@ class _DataPage extends State<DataPage> {
   String? dropdownMachine;
   late Map<String, dynamic> quertParams;
 
-  late double _fechAnalysisNum = 0;
+  late int _fechAnalysisNum = 0;
 
   Future<void> fetchAnalysisData(String getToken, Map<String, dynamic> queryParams) async {
     final response = await http.get(
@@ -34,7 +34,7 @@ class _DataPage extends State<DataPage> {
     if (response.statusCode == 200) {
       // サーバーが成功のステータスコード200を返す場合、JSONを解析します。
       setState(() {
-        _fechAnalysisNum = (json.decode(response.body) as num).toDouble();
+        _fechAnalysisNum = (json.decode(response.body) as num).toInt();
       });
     } else {
       // サーバーがエラーレスポンスを返す場合、エラーをスローします。
