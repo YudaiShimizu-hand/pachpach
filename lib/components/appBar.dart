@@ -28,28 +28,52 @@ class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
                       onPressed: () {
                         Navigator.pushNamed(context, '/');
                       },
-                      child: const MenuAcceleratorLabel('&Home'),
+                      child: Row(
+                        children: [
+                          Icon(Icons.home, color: Colors.white,),  // こちらがアイコンです。
+                          const SizedBox(width: 8),  // これはアイコンとラベルの間のスペースです。
+                          MenuAcceleratorLabel('&Home'),
+                        ],
+                      ),
                     ),
                     if(isBtn != 'Record')
                     MenuItemButton(
                           onPressed: () {
                             Navigator.pushNamed(context, '/record');
                           },
-                        child: const MenuAcceleratorLabel('&Record'),
+                          child: Row(
+                            children: [
+                              Icon(Icons.edit, color: Colors.white,),  // こちらがアイコンです。
+                              const SizedBox(width: 8),  // これはアイコンとラベルの間のスペースです。
+                              MenuAcceleratorLabel('&Record'),
+                            ],
+                          ),
                     ),
                     if(isBtn != 'Calendar')
                     MenuItemButton(
                           onPressed: () {
                               Navigator.pushNamed(context, '/calendar');
                           },
-                        child: const MenuAcceleratorLabel('&Calendar'),
+                          child: Row(
+                            children: [
+                              Icon(Icons.calendar_month, color: Colors.white,),  // こちらがアイコンです。
+                              const SizedBox(width: 8),  // これはアイコンとラベルの間のスペースです。
+                              MenuAcceleratorLabel('&Calendar'),
+                            ],
+                          ),
                         ),
                     if(isBtn != 'Data')
                     MenuItemButton(
                           onPressed: () {
                             Navigator.pushNamed(context, '/data');
                           },
-                          child: const MenuAcceleratorLabel('&Data'),
+                          child: Row(
+                            children: [
+                              Icon(Icons.equalizer, color: Colors.white,),  // こちらがアイコンです。
+                              const SizedBox(width: 8),  // これはアイコンとラベルの間のスペースです。
+                              MenuAcceleratorLabel('&Data'),
+                            ],
+                          ),
                     ),
                     MenuItemButton(
                       onPressed: () {
@@ -76,7 +100,13 @@ class AppBarCmp extends StatelessWidget implements PreferredSizeWidget{
                           },
                         );
                       },
-                      child: const MenuAcceleratorLabel('&Logout'),
+                      child: Row(
+                        children: [
+                          Icon(Icons.logout, color: Colors.white,),  // こちらがアイコンです。
+                          const SizedBox(width: 8),  // これはアイコンとラベルの間のスペースです。
+                          MenuAcceleratorLabel('&Logout'),
+                        ],
+                      ),
                     ),
                   ],
                     child:  const Icon(Icons.menu, color: Color(KbaseColor),
