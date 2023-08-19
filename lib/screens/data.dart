@@ -5,6 +5,7 @@ import 'package:pachpach/constants.dart';
 import 'package:pachpach/services/riverPod/setProvider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:countup/countup.dart';
 
 class DataPage extends StatefulWidget {
   const DataPage({super.key});
@@ -227,7 +228,14 @@ class _DataPage extends State<DataPage> {
                   KSecondSpace,
                   Text('勝率は',style: TextStyle(color: Colors.black, fontSize: 20),),
                   KSpace,
-                  Text('  $_fechAnalysisNum %',style: TextStyle(fontSize: 60),),
+                  Countup(
+                      begin: 0,
+                      end: _fechAnalysisNum.toDouble(),
+                      duration: Duration(seconds: 3),
+                      separator: ',',
+                      style: TextStyle(fontSize: 60),
+                      suffix: ' %',
+                  )
                 ],
               ),
             ),
