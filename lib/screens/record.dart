@@ -129,10 +129,12 @@ class _RecordPage extends State<RecordPage> {
               width: 160,
               child: Consumer(builder: (context, watch, child){
                 final places = watch(placeProvider);
+                if (places.data?.value?.isEmpty ?? true) {
                   return DropdownButton<String>(
                     alignment: Alignment.center,
                     dropdownColor: Colors.white,
-                    value: dropdownPlace ?? places.data?.value?.first,
+                    value: null,
+                    hint: Text('+ボタンから追加', style: TextStyle(color: Colors.black),),
                     icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
                     isExpanded: true,
                     elevation: 16,
@@ -150,8 +152,8 @@ class _RecordPage extends State<RecordPage> {
                     items: places.when(
                       data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
-                         value: value,
-                         child: Text(value)
+                            value: null,
+                            child: Text('+ボタンから追加')
                         );
                       }).toList(),
                       loading: () {
@@ -165,6 +167,46 @@ class _RecordPage extends State<RecordPage> {
                       error: (Object error, StackTrace? stackTrace) {  },
                     ),
                   );
+                }else {
+                  return DropdownButton<String>(
+                    alignment: Alignment.center,
+                    dropdownColor: Colors.white,
+                    value: dropdownPlace ?? places.data!.value!.first,
+                    icon: const Icon(
+                      Icons.arrow_circle_down, color: Colors.white,),
+                    isExpanded: true,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.white,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownPlace = value!;
+                      });
+                    },
+                    items: places.when(
+                      data: (data) =>
+                          data?.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value)
+                            );
+                          }).toList(),
+                      loading: () {
+                        return [
+                          DropdownMenuItem<String>(
+                            value: null,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ];
+                      },
+                      error: (Object error, StackTrace? stackTrace) {},
+                    ),
+                  );
+                }
                })
               ),
             KSpace,
@@ -229,42 +271,84 @@ class _RecordPage extends State<RecordPage> {
                 width: 160,
                 child: Consumer(builder: (context, watch, child){
                   final shops = watch(shopProvider);
-                  return DropdownButton<String>(
-                    alignment: Alignment.center,
-                    dropdownColor: Colors.white,
-                    value: dropdownShop ?? shops.data?.value?.first,
-                    icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
-                    isExpanded: true,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.white,
-                    ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownShop = value!;
-                      });
-                    },
-                    items: shops.when(
-                      data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value)
-                        );
-                      }).toList(),
-                      loading: () {
-                        return [
-                          DropdownMenuItem<String>(
-                            value: null,
-                            child: CircularProgressIndicator(),
-                          ),
-                        ];
+                  if (shops.data?.value?.isEmpty ?? true) {
+                    return DropdownButton<String>(
+                      alignment: Alignment.center,
+                      dropdownColor: Colors.white,
+                      value: null,
+                      hint: Text('+ボタンから追加', style: TextStyle(color: Colors.black),),
+                      icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
+                      isExpanded: true,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.white,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownShop = value!;
+                        });
                       },
-                      error: (Object error, StackTrace? stackTrace) {  },
-                    ),
-                  );
+                      items: shops.when(
+                        data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                              value: null,
+                              child: Text('+ボタンから追加')
+                          );
+                        }).toList(),
+                        loading: () {
+                          return [
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ];
+                        },
+                        error: (Object error, StackTrace? stackTrace) {  },
+                      ),
+                    );
+                  }else {
+                    return DropdownButton<String>(
+                      alignment: Alignment.center,
+                      dropdownColor: Colors.white,
+                      value: dropdownShop ?? shops.data?.value?.first,
+                      icon: const Icon(
+                        Icons.arrow_circle_down, color: Colors.white,),
+                      isExpanded: true,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.white,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownShop = value!;
+                        });
+                      },
+                      items: shops.when(
+                        data: (data) =>
+                            data?.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value)
+                              );
+                            }).toList(),
+                        loading: () {
+                          return [
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ];
+                        },
+                        error: (Object error, StackTrace? stackTrace) {},
+                      ),
+                    );
+                  }
                 })
             ),
             KSpace,
@@ -329,42 +413,84 @@ class _RecordPage extends State<RecordPage> {
                 width: 160,
                 child: Consumer(builder: (context, watch, child){
                   final machines = watch(machineProvider);
-                  return DropdownButton<String>(
-                    alignment: Alignment.center,
-                    dropdownColor: Colors.white,
-                    value: dropdownMachine ?? machines.data?.value?.first,
-                    icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
-                    isExpanded: true,
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.white,
-                    ),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownMachine = value!;
-                      });
-                    },
-                    items: machines.when(
-                      data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value)
-                        );
-                      }).toList(),
-                      loading: () {
-                        return [
-                          DropdownMenuItem<String>(
-                            value: null,
-                            child: CircularProgressIndicator(),
-                          ),
-                        ];
+                  if (machines.data?.value?.isEmpty ?? true) {
+                    return DropdownButton<String>(
+                      alignment: Alignment.center,
+                      dropdownColor: Colors.white,
+                      value: null,
+                      hint: Text('+ボタンから追加', style: TextStyle(color: Colors.black),),
+                      icon: const Icon(Icons.arrow_circle_down, color: Colors.white,),
+                      isExpanded: true,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.white,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownMachine = value!;
+                        });
                       },
-                      error: (Object error, StackTrace? stackTrace) {  },
-                    ),
-                  );
+                      items: machines.when(
+                        data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                              value: null,
+                              child: Text('+ボタンから追加')
+                          );
+                        }).toList(),
+                        loading: () {
+                          return [
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ];
+                        },
+                        error: (Object error, StackTrace? stackTrace) {  },
+                      ),
+                    );
+                  }else {
+                    return DropdownButton<String>(
+                      alignment: Alignment.center,
+                      dropdownColor: Colors.white,
+                      value: dropdownMachine ?? machines.data?.value?.first,
+                      icon: const Icon(
+                        Icons.arrow_circle_down, color: Colors.white,),
+                      isExpanded: true,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.white,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownMachine = value!;
+                        });
+                      },
+                      items: machines.when(
+                        data: (data) =>
+                            data?.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value)
+                              );
+                            }).toList(),
+                        loading: () {
+                          return [
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ];
+                        },
+                        error: (Object error, StackTrace? stackTrace) {},
+                      ),
+                    );
+                  }
                 })
             ),
             KSpace,
