@@ -68,110 +68,241 @@ class _DataPage extends State<DataPage> {
                           children: <Widget>[
                             Consumer(builder: (context, watch, child){
                               final places = watch(placeProvider);
-                              return DropdownButton<String>(
-                                alignment: Alignment.center,
-                                dropdownColor: Colors.black,
-                                value: dropdownPlace ?? places.data?.value?.first,
-                                icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
-                                isExpanded: true,
-                                elevation: 16,
-                                style: const TextStyle(color: Color(KbaseColor)),
-                                underline: Container(
-                                  height: 2,
-                                  color: Color(KbaseColor),
-                                ),
-                                onChanged: (String? value) {
-                                  // This is called when the user selects an item.
-                                  setState(() {
-                                    dropdownPlace = value!;
-                                  });
-                                },
-                                items: places.when(
-                                  data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
-                                    return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value)
-                                    );
-                                  }).toList(),
-                                  loading: () {
-                                    return [
-                                      DropdownMenuItem<String>(
-                                        value: null,
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ];
-                                  }, error: (Object error, StackTrace? stackTrace) {  },
-                                ),
-                              );
+                              if (places.data?.value?.isEmpty ?? true) {
+                                return DropdownButton<String>(
+                                  alignment: Alignment.center,
+                                  dropdownColor: Colors.black,
+                                  value: null,
+                                  hint: Text('データがありません'),
+                                  icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
+                                  isExpanded: true,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Color(KbaseColor)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(KbaseColor),
+                                  ),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownPlace = value!;
+                                    });
+                                  },
+                                  items: places.when(
+                                    data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                          value: null,
+                                          child: Text('データがありません')
+                                      );
+                                    }).toList(),
+                                    loading: () {
+                                      return [
+                                        DropdownMenuItem<String>(
+                                          value: null,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ];
+                                    }, error: (Object error, StackTrace? stackTrace) {  },
+                                  ),
+                                );
+                              }else {
+                                return DropdownButton<String>(
+                                  alignment: Alignment.center,
+                                  dropdownColor: Colors.black,
+                                  value: dropdownPlace ??
+                                      places.data?.value?.first,
+                                  icon: const Icon(Icons.arrow_circle_down,
+                                    color: Color(KbaseColor),),
+                                  isExpanded: true,
+                                  elevation: 16,
+                                  style: const TextStyle(
+                                      color: Color(KbaseColor)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(KbaseColor),
+                                  ),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownPlace = value!;
+                                    });
+                                  },
+                                  items: places.when(
+                                    data: (data) =>
+                                        data?.map<DropdownMenuItem<String>>((
+                                            String value) {
+                                          return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value)
+                                          );
+                                        }).toList(),
+                                    loading: () {
+                                      return [
+                                        DropdownMenuItem<String>(
+                                          value: null,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ];
+                                    },
+                                    error: (Object error,
+                                        StackTrace? stackTrace) {},
+                                  ),
+                                );
+                              }
                             }),
                             Consumer(builder: (context, watch, child){
                               final shops = watch(shopProvider);
-                              return DropdownButton<String>(
-                                alignment: Alignment.center,
-                                dropdownColor: Colors.black,
-                                value: dropdownShop ?? shops.data?.value?.first,
-                                icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
-                                isExpanded: true,
-                                elevation: 16,
-                                style: const TextStyle(color: Color(KbaseColor)),
-                                underline: Container(
-                                  height: 2,
-                                  color: Color(KbaseColor),
-                                ),
-                                onChanged: (String? value) {
-                                  // This is called when the user selects an item.
-                                  setState(() {
-                                    dropdownShop = value!;
-                                  });
-                                },
-                                items: shops.when(
-                                  data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
-                                    return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value)
-                                    );
-                                  }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
-                                ),
-                              );
+                              if (shops.data?.value?.isEmpty ?? true) {
+                                return DropdownButton<String>(
+                                  alignment: Alignment.center,
+                                  dropdownColor: Colors.black,
+                                  value: null,
+                                  hint: Text('データがありません'),
+                                  icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
+                                  isExpanded: true,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Color(KbaseColor)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(KbaseColor),
+                                  ),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownShop = value!;
+                                    });
+                                  },
+                                  items: shops.when(
+                                    data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                          value: null,
+                                          child: Text('データがありません')
+                                      );
+                                    }).toList(), loading: () {  }, error: (Object error, StackTrace? stackTrace) {  },
+                                  ),
+                                );
+                              }else {
+                                return DropdownButton<String>(
+                                  alignment: Alignment.center,
+                                  dropdownColor: Colors.black,
+                                  value: dropdownShop ??
+                                      shops.data!.value!.first,
+                                  icon: const Icon(Icons.arrow_circle_down,
+                                    color: Color(KbaseColor),),
+                                  isExpanded: true,
+                                  elevation: 16,
+                                  style: const TextStyle(
+                                      color: Color(KbaseColor)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(KbaseColor),
+                                  ),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownShop = value!;
+                                    });
+                                  },
+                                  items: shops.when(
+                                    data: (data) =>
+                                        data?.map<DropdownMenuItem<String>>((
+                                            String value) {
+                                          return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value)
+                                          );
+                                        }).toList(),
+                                    loading: () {},
+                                    error: (Object error,
+                                        StackTrace? stackTrace) {},
+                                  ),
+                                );
+                              }
                             }),
                             Consumer(builder: (context, watch, child){
                               final machines = watch(machineProvider);
-                              return DropdownButton<String>(
-                                alignment: Alignment.center,
-                                dropdownColor: Colors.black,
-                                value: dropdownMachine ?? machines.data?.value?.first,
-                                icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
-                                isExpanded: true,
-                                elevation: 16,
-                                style: const TextStyle(color: Color(KbaseColor)),
-                                underline: Container(
-                                  height: 2,
-                                  color: Color(KbaseColor),
-                                ),
-                                onChanged: (String? value) {
-                                  // This is called when the user selects an item.
-                                  setState(() {
-                                    dropdownMachine = value!;
-                                  });
-                                },
-                                items: machines.when(
-                                  data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
-                                    return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value)
-                                    );
-                                  }).toList(),
-                                  loading: () {
-                                    return [
-                                      DropdownMenuItem<String>(
-                                        value: null,
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    ];
+                              if (machines.data?.value?.isEmpty ?? true) {
+                                return DropdownButton<String>(
+                                  alignment: Alignment.center,
+                                  dropdownColor: Colors.black,
+                                  value: null,
+                                  hint: Text('データがありません'),
+                                  icon: const Icon(Icons.arrow_circle_down, color: Color(KbaseColor),),
+                                  isExpanded: true,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Color(KbaseColor)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(KbaseColor),
+                                  ),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownMachine = value!;
+                                    });
                                   },
-                                  error: (Object error, StackTrace? stackTrace) {  },
-                                ),
-                              );
+                                  items: machines.when(
+                                    data: (data) => data?.map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                          value: null,
+                                          child: Text('データがありません')
+                                      );
+                                    }).toList(),
+                                    loading: () {
+                                      return [
+                                        DropdownMenuItem<String>(
+                                          value: null,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ];
+                                    },
+                                    error: (Object error, StackTrace? stackTrace) {  },
+                                  ),
+                                );
+                              }else {
+                                return DropdownButton<String>(
+                                  alignment: Alignment.center,
+                                  dropdownColor: Colors.black,
+                                  value: dropdownMachine ??
+                                      machines.data!.value!.first,
+                                  icon: const Icon(Icons.arrow_circle_down,
+                                    color: Color(KbaseColor),),
+                                  isExpanded: true,
+                                  elevation: 16,
+                                  style: const TextStyle(
+                                      color: Color(KbaseColor)),
+                                  underline: Container(
+                                    height: 2,
+                                    color: Color(KbaseColor),
+                                  ),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownMachine = value!;
+                                    });
+                                  },
+                                  items: machines.when(
+                                    data: (data) =>
+                                        data?.map<DropdownMenuItem<String>>((
+                                            String value) {
+                                          return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value)
+                                          );
+                                        }).toList(),
+                                    loading: () {
+                                      return [
+                                        DropdownMenuItem<String>(
+                                          value: null,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ];
+                                    },
+                                    error: (Object error,
+                                        StackTrace? stackTrace) {},
+                                  ),
+                                );
+                              }
                             }),
                           ],
                         ),
