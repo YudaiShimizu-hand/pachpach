@@ -90,7 +90,11 @@ class _RecordPage extends State<RecordPage> {
                             controller: controller,
                             onFieldSubmitted: (_) {
                               // エンターを押したときに実行される
-                                String placeValue = controller.text;
+                                String placeValue = controller.text.trim();
+                                if(placeValue.isEmpty){
+                                  Navigator.pop(context);
+                                  return;
+                                }
                                 controller.clear();
                                 Navigator.pop(context, placeValue);
                                 final placeNotifier = context.read(placeNotifierProvider);
@@ -105,7 +109,11 @@ class _RecordPage extends State<RecordPage> {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                String placeValue = controller.text;
+                                String placeValue = controller.text.trim();
+                                if(placeValue.isEmpty){
+                                  Navigator.pop(context);
+                                  return;
+                                }
                                 controller.clear();
                                 Navigator.pop(context, placeValue);
                                 final placeNotifier = context.read(placeNotifierProvider);
@@ -232,7 +240,11 @@ class _RecordPage extends State<RecordPage> {
                           controller: controller,
                           onFieldSubmitted: (_) {
                             // エンターを押したときに実行される
-                            String shopValue = controller.text;
+                            String shopValue = controller.text.trim();
+                            if(shopValue.isEmpty){
+                              Navigator.pop(context);
+                              return;
+                            }
                             controller.clear();
                             Navigator.pop(context, shopValue);
                             final shopNotifier = context.read(shopNotifierProvider);
@@ -247,7 +259,11 @@ class _RecordPage extends State<RecordPage> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              String shopValue = controller.text;
+                              String shopValue = controller.text.trim();
+                              if(shopValue.isEmpty){
+                                Navigator.pop(context);
+                                return;
+                              }
                               controller.clear();
                               Navigator.pop(context, shopValue);
                               final shopNotifier = context.read(shopNotifierProvider);
@@ -374,7 +390,11 @@ class _RecordPage extends State<RecordPage> {
                           controller: controller,
                           onFieldSubmitted: (_) {
                             // エンターを押したときに実行される
-                            String machineValue = controller.text;
+                            String machineValue = controller.text.trim();
+                            if(machineValue.isEmpty){
+                              Navigator.pop(context);
+                              return;
+                            }
                             controller.clear();
                             Navigator.pop(context, machineValue);
                             final machineNotifier = context.read(machineNotifierProvider);
@@ -389,7 +409,11 @@ class _RecordPage extends State<RecordPage> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              String machineValue = controller.text;
+                              String machineValue = controller.text.trim();
+                              if(machineValue.isEmpty){
+                                Navigator.pop(context);
+                                return;
+                              }
                               controller.clear();
                               Navigator.pop(context, machineValue);
                               final machineNotifier = context.read(machineNotifierProvider);
